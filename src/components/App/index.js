@@ -12,7 +12,7 @@ import './styles.scss';
 // == Composant
 const App = () => (
   <div className="app">
-    <div className="header">
+    <div className="app__header">
       <img src={logo} alt="github logo" />
     </div>
     <SearchBar />
