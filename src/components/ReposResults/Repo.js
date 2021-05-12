@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 
 import './styles.scss';
 
-const Repo = ({ full_name: fullName, owner, description }) => (
+const Repo = ({ name, owner, description }) => (
   <Card>
     <Image src={owner.avatar_url} wrapped ui={false} />
     <Card.Content>
-      <Card.Header>{fullName}</Card.Header>
+      <Card.Header>{name}</Card.Header>
       <Card.Meta>
         <span>{owner.login}</span>
       </Card.Meta>
@@ -25,7 +25,7 @@ Repo.defaultProps = {
 };
 
 Repo.propTypes = {
-  full_name: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   owner: PropTypes.shape({
     login: PropTypes.string,
     avatar_url: PropTypes.string,

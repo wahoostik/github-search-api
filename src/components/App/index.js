@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 // == Import npm
-import React from 'react';
+import React, { useState } from 'react';
 
 // == Import
 import SearchBar from 'src/components/SearchBar';
@@ -12,18 +12,34 @@ import './styles.scss';
 import reposData from 'src/data/repos';
 
 // == Composant
-const App = () => (
-  <div className="app">
-    <div className="app__header">
-      <a href="/">
-        <img src={logo} alt="github logo" />
-      </a>
+const App = () => {
+  // fonction qui vient alléger les propriété des objets de résultats
+  // on aura une meilleure vue sur ce qu'on passe à nos composants
+  const resultsParser = (repos) => repos.map((repo) => ({
+    id: repo.id,
+    name: repo.name,
+    owner: {
+      avatar_url: repo.owner.avatar_url,
+      login: repo.owner.login,
+    },
+    description: repo.description ? repo.description : 'No description', // Si il n'y a pas de description
+  }));
+
+  const [results, setResults] = useState(resultsParser(reposData.items));
+
+  return (
+    <div className="app">
+      <div className="app__header">
+        <a href="/">
+          <img src={logo} alt="github logo" />
+        </a>
+      </div>
+      <SearchBar />
+      <Message message="La recherche a générée XXXX résultats" />
+      <ReposResults results={results} />
     </div>
-    <SearchBar />
-    <Message message="La recherche a générée XXXX résultats" />
-    <ReposResults results={reposData.items} />
-  </div>
-);
+  );
+};
 
 // == Export
 export default App;
