@@ -27,6 +27,7 @@ const App = () => {
 
   const [results, setResults] = useState(resultsParser(reposData.items));
   const [inputValue, setInputValue] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <div className="app">
@@ -38,6 +39,7 @@ const App = () => {
       <SearchBar
         inputValue={inputValue}
         onChangeInputValue={setInputValue}
+        onSubmitForm={setSearchQuery}
       />
       <Message message="La recherche a générée XXXX résultats" />
       <ReposResults results={results} />

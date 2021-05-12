@@ -4,13 +4,18 @@ import PropTypes from 'prop-types';
 
 import './styles.scss';
 
-const SearchBar = ({ inputValue, onChangeInputValue }) => {
+const SearchBar = ({ inputValue, onChangeInputValue, onSubmitForm }) => {
   const handleOnChange = (event) => {
     onChangeInputValue(event.target.value);
   };
+
+  const handleOnSubmit = () => {
+    onSubmitForm(inputValue);
+  };
+
   return (
     <Segment>
-      <Form>
+      <Form onSubmit={handleOnSubmit}>
         <Form.Input
           icon="search"
           iconPosition="left"
@@ -26,6 +31,7 @@ const SearchBar = ({ inputValue, onChangeInputValue }) => {
 SearchBar.propTypes = {
   inputValue: PropTypes.string.isRequired,
   onChangeInputValue: PropTypes.func.isRequired,
+  onSubmitForm: PropTypes.func.isRequired,
 };
 
 export default SearchBar;
