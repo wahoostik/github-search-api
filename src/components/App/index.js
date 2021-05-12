@@ -9,15 +9,19 @@ import ReposResults from 'src/components/ReposResults';
 import logo from 'src/assets/images/logo-github.png';
 import './styles.scss';
 
+import reposData from 'src/data/repos';
+
 // == Composant
 const App = () => (
   <div className="app">
     <div className="app__header">
-      <img src={logo} alt="github logo" />
+      <a href="/">
+        <img src={logo} alt="github logo" />
+      </a>
     </div>
     <SearchBar />
-    <Message />
-    <ReposResults />
+    <Message message="La recherche a générée XXXX résultats" />
+    <ReposResults results={reposData.items} />
   </div>
 );
 

@@ -3,7 +3,7 @@ import { Form, Segment } from 'semantic-ui-react';
 
 import './styles.scss';
 
-const SearchBar = (() => (
+const SearchBar = () => (
   <Segment>
     <Form>
       <Form.Input
@@ -13,6 +13,6 @@ const SearchBar = (() => (
       />
     </Form>
   </Segment>
-));
+);
 
 export default SearchBar;
