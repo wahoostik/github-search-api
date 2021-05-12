@@ -26,6 +26,7 @@ const App = () => {
   }));
 
   const [results, setResults] = useState(resultsParser(reposData.items));
+  const [inputValue, setInputValue] = useState('');
 
   return (
     <div className="app">
@@ -34,7 +35,10 @@ const App = () => {
           <img src={logo} alt="github logo" />
         </a>
       </div>
-      <SearchBar />
+      <SearchBar
+        inputValue={inputValue}
+        onChangeInputValue={setInputValue}
+      />
       <Message message="La recherche a générée XXXX résultats" />
       <ReposResults results={results} />
     </div>
