@@ -1,15 +1,23 @@
+/* eslint-disable import/no-unresolved */
 // == Import npm
 import React from 'react';
 
 // == Import
-import reactLogo from './react-logo.svg';
-import './styles.css';
+import SearchBar from 'src/components/SearchBar';
+import Message from 'src/components/Message';
+import ReposResults from 'src/components/ReposResults';
+import logo from 'src/assets/images/logo-github.png';
+import './styles.scss';
 
 // == Composant
 const App = () => (
   <div className="app">
-    <img src={reactLogo} alt="react logo" />
-    <h1>Composant : App</h1>
+    <div className="header">
+      <img src={logo} alt="github logo" />
+    </div>
+    <SearchBar />
+    <Message />
+    <ReposResults />
   </div>
 );
 
