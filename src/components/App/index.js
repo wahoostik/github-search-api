@@ -32,18 +32,23 @@ const App = () => {
   const [inputValue, setInputValue] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const baseUrl = 'https://api.github.com/search/repositories?q=react';
+  const baseUrl = `https://api.github.com/search/repositories?q=${searchQuery}`;
 
   useEffect(async () => {
-    try {
-      const response = await axios.get(baseUrl);
-      const items = resultsParser(response.data.items);
-      setResults(items);
+    if (searchQuery) {
+      try {
+        const response = await axios.get(baseUrl);
+        const items = resultsParser(response.data.items);
+        setResults(items);
+      }
+      catch (error) {
+        console.trace(error);
+      }
     }
-    catch (error) {
-      console.trace(error);
-    }
-  }, []);
+    // ici on demande à useEffect d'exécuter la fonction passé en arguments
+    // à chaque fois que searchQuery change => watcher
+    // le tableau de dépendances
+  }, [searchQuery]);
 
   return (
     <div className="app">

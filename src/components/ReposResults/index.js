@@ -8,7 +8,6 @@ import Repo from './Repo';
 
 const ReposResults = ({ results }) => (
   <div>
-    ReposResults
     <Card.Group itemsPerRow={3} stackable>
       {results.map((result) => <Repo key={result.id} {...result} />)}
     </Card.Group>
