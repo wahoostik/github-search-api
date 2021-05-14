@@ -1,6 +1,9 @@
+/* eslint-disable spaced-comment */
+/* eslint-disable no-console */
 /* eslint-disable import/no-unresolved */
 // == Import npm
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 // == Import
 import SearchBar from 'src/components/SearchBar';
@@ -9,7 +12,7 @@ import ReposResults from 'src/components/ReposResults';
 import logo from 'src/assets/images/logo-github.png';
 import './styles.scss';
 
-import reposData from 'src/data/repos';
+//import reposData from 'src/data/repos';
 
 // == Composant
 const App = () => {
@@ -25,9 +28,22 @@ const App = () => {
     description: repo.description ? repo.description : 'No description', // Si il n'y a pas de description
   }));
 
-  const [results, setResults] = useState(resultsParser(reposData.items));
+  const [results, setResults] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+
+  const baseUrl = 'https://api.github.com/search/repositories?q=react';
+
+  useEffect(async () => {
+    try {
+      const response = await axios.get(baseUrl);
+      const items = resultsParser(response.data.items);
+      setResults(items);
+    }
+    catch (error) {
+      console.trace(error);
+    }
+  }, []);
 
   return (
     <div className="app">
