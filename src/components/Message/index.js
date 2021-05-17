@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 
 import './styles.scss';
 
-const Message = ({ message }) => (
-  <MessageSUI>{message}</MessageSUI>
+const Message = ({ message, hasError }) => (
+  <MessageSUI negative={hasError}>{message}</MessageSUI>
 );
 
 Message.propTypes = {
   message: PropTypes.string.isRequired,
+  hasError: PropTypes.bool.isRequired,
 };
 
 export default Message;

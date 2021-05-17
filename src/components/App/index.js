@@ -9,6 +9,7 @@ import axios from 'axios';
 import SearchBar from 'src/components/SearchBar';
 import Message from 'src/components/Message';
 import ReposResults from 'src/components/ReposResults';
+import Loader from 'src/components/Loader';
 import logo from 'src/assets/images/logo-github.png';
 import './styles.scss';
 
@@ -31,19 +32,36 @@ const App = () => {
   const [results, setResults] = useState([]); // Récupérer les datas pour les stocker dans le state
   const [inputValue, setInputValue] = useState(''); // Contrôler l'input de recherche
   const [searchQuery, setSearchQuery] = useState(''); // Pour stocker la valeur au moment du submit.
-  const [loading, setLoading] = useState(false); // Etat du loading sur l'input
+  const [loading, setLoading] = useState(false); // Etat du loading sur l'input et du composant
+  const [total, setTotal] = useState(0); // Nombre de repos trouvé par recherche
+  const [message, setMessage] = useState(''); // Message qui varie selon le statut
+  const [hasError, setHasError] = useState(false); // Message d'erreur pour avertir l'utilisateur
 
   const baseUrl = `https://api.github.com/search/repositories?q=${searchQuery}`;
+
+  const reset = () => {
+    setHasError(false);
+    setResults([]);
+    setTotal(0);
+    setMessage('');
+  };
 
   useEffect(async () => {
     if (searchQuery) {
       try {
+        reset();
         setLoading(true);
+        setMessage('Veuillez patienter...');
         const response = await axios.get(baseUrl);
         const items = resultsParser(response.data.items);
+        const totalResults = response.data.total_count;
         setResults(items);
+        setTotal(totalResults);
+        setMessage(`La recherche a générée ${totalResults} résultat${totalResults > 1 ? 's' : ''}`);
       }
       catch (error) {
+        setMessage('Une erreur s\'est produite');
+        setHasError(true);
         console.trace(error);
       }
       finally {
@@ -67,8 +85,15 @@ const App = () => {
         onChangeInputValue={setInputValue}
         onSubmitForm={setSearchQuery}
         isLoading={loading}
+        onError={(errorMessage) => {
+          setMessage(errorMessage);
+          setHasError(true);
+        }}
       />
-      <Message message="La recherche a générée XXXX résultats" />
+      {message && <Message message={message} hasError={hasError} />}
+      {loading && (
+        <Loader />
+      )}
       <ReposResults results={results} />
     </div>
   );

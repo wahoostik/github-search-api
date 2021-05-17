@@ -5,14 +5,19 @@ import PropTypes from 'prop-types';
 import './styles.scss';
 
 const SearchBar = ({
-  inputValue, onChangeInputValue, onSubmitForm, isLoading,
+  inputValue, onChangeInputValue, onSubmitForm, isLoading, onError,
 }) => {
   const handleOnChange = (event) => {
     onChangeInputValue(event.target.value);
   };
 
   const handleOnSubmit = () => {
-    onSubmitForm(inputValue);
+    if (inputValue.length < 3) {
+      onError('Veuillez écrire au moins trois caractères');
+    }
+    else {
+      onSubmitForm(inputValue);
+    }
   };
 
   return (
@@ -36,6 +41,7 @@ SearchBar.propTypes = {
   onChangeInputValue: PropTypes.func.isRequired,
   onSubmitForm: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  onError: PropTypes.func.isRequired,
 };
 
 export default SearchBar;
