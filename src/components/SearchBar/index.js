@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 
 import './styles.scss';
 
-const SearchBar = ({ inputValue, onChangeInputValue, onSubmitForm }) => {
+const SearchBar = ({
+  inputValue, onChangeInputValue, onSubmitForm, isLoading,
+}) => {
   const handleOnChange = (event) => {
     onChangeInputValue(event.target.value);
   };
@@ -22,6 +24,7 @@ const SearchBar = ({ inputValue, onChangeInputValue, onSubmitForm }) => {
           placeholder="Rechercher un repo..."
           value={inputValue}
           onChange={handleOnChange}
+          loading={isLoading}
         />
       </Form>
     </Segment>
@@ -32,6 +35,7 @@ SearchBar.propTypes = {
   inputValue: PropTypes.string.isRequired,
   onChangeInputValue: PropTypes.func.isRequired,
   onSubmitForm: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default SearchBar;

@@ -28,21 +28,26 @@ const App = () => {
     description: repo.description ? repo.description : 'No description', // Si il n'y a pas de description
   }));
 
-  const [results, setResults] = useState([]);
-  const [inputValue, setInputValue] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [results, setResults] = useState([]); // Récupérer les datas pour les stocker dans le state
+  const [inputValue, setInputValue] = useState(''); // Contrôler l'input de recherche
+  const [searchQuery, setSearchQuery] = useState(''); // Pour stocker la valeur au moment du submit.
+  const [loading, setLoading] = useState(false); // Etat du loading sur l'input
 
   const baseUrl = `https://api.github.com/search/repositories?q=${searchQuery}`;
 
   useEffect(async () => {
     if (searchQuery) {
       try {
+        setLoading(true);
         const response = await axios.get(baseUrl);
         const items = resultsParser(response.data.items);
         setResults(items);
       }
       catch (error) {
         console.trace(error);
+      }
+      finally {
+        setLoading(false);
       }
     }
     // ici on demande à useEffect d'exécuter la fonction passé en arguments
@@ -61,6 +66,7 @@ const App = () => {
         inputValue={inputValue}
         onChangeInputValue={setInputValue}
         onSubmitForm={setSearchQuery}
+        isLoading={loading}
       />
       <Message message="La recherche a générée XXXX résultats" />
       <ReposResults results={results} />
