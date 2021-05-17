@@ -30,7 +30,7 @@ yarn start
 
 ## Auteur
 
-* **Anthony Paccaud**
+**Anthony Paccaud**
 
 ## Remerciements
 
